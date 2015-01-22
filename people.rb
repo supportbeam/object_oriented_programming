@@ -5,5 +5,12 @@ class Student
 end
 
 class Instructor
+  def teach
+    "Everything in Ruby is an Object"
+  end
 end
 
+x = Student.new
+puts x.learn
+y = Instructor.new
+puts y.teach
