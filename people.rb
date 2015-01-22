@@ -35,3 +35,8 @@ puts chris.greeting
 cristina = Student.new("Cristina")
 puts cristina.greeting
 
+puts chris.teach
+puts cristina.learn
+
+# cristina.teach will return an error because Class Student does not have the teach method
+
