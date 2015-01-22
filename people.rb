@@ -24,7 +24,10 @@ class Instructor < Person
   end
 end
 
-x = Student.new
-puts x.learn
-y = Instructor.new
-puts y.teach
+# x = Student.new
+# puts x.learn
+# y = Instructor.new
+# puts y.teach
+
+chris = Instructor.new("Chris")
+puts chris.greeting
