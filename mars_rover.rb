@@ -16,6 +16,7 @@ class Rover
         "That is not a valid input."
       end
     end
+    "#{x} #{y} #{direction}"
   end
 
   def move
@@ -51,25 +52,25 @@ puts "Upper-right coordinates of the plateau:"
 plateau_size = gets.chomp
 
 puts "Please provide the initial start position:"
-start_position = gets.chomp
+x, y, dir = gets.chomp.split
 
 puts "Please provide navigation instructions:"
 navigation = gets.chomp
 
+r1 = Rover.new(x.to_i, y.to_i, dir)
+puts r1.read_instruction(navigation)
 
+# r1 = Rover.new(1, 2, 'N')
+# r1.read_instruction("LMLMLMLMM")
+# puts r1.x
+# puts r1.y
+# puts r1.direction
 
-
-r1 = Rover.new(1, 2, 'N')
-r1.read_instruction("LMLMLMLMM")
-puts r1.x
-puts r1.y
-puts r1.direction
-
-r2 = Rover.new(3, 3, 'E')
-r2.read_instruction("MMRMMRMRRM")
-puts r2.x
-puts r2.y
-puts r2.direction
+# r2 = Rover.new(3, 3, 'E')
+# r2.read_instruction("MMRMMRMRRM")
+# puts r2.x
+# puts r2.y
+# puts r2.direction
 
 
 
