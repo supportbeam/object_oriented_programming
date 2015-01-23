@@ -1,13 +1,52 @@
 class Rover
-  attr_accessor :x, :y, :direction
-	def initialize(x=0, y=0, direction)
-    @x = x
-    @y = y
+  attr_accessor :x, :y, :direction, :width, :height
+	def initialize(x=0, y=0, direction, width, height)
+    @x = x.to_i
+    @y = y.to_i
     @direction = direction
+    @width = width.to_i
+    @height = height.to_i
+  end
+
+  def to_s
+    "#{x} #{y} #{direction}"
+  end
+
+  # ARROWS = {
+  #   "N" => "↑",
+  #   "S" => "↓",
+  #   "E" => "→",
+  #   "W" => "←",
+  # }
+  ARROWS = {
+    "N" => "^",
+    "S" => "v",
+    "E" => ">",
+    "W" => "<",
+  }
+
+  def print_plateau(step_num)
+    puts "Step: #{step_num}"
+    sep = (["---"] * width) # Create separators as long as the width
+    sep = [""] + sep + [""]  # Extra empties for bars
+    sep = sep.join("+")     # Create corners
+    height.downto(0) do |row|     # Go down the height
+      puts sep
+      r = ["   "] * width # Create cells
+      if row == y # If the rover is on this row
+        r[x] = " #{ARROWS[direction]} " # Print the direction in the cell
+      end
+      r = [""] + r + [""] # Adding outer bars
+
+      puts r.join("|") # Creating and printing columns
+    end
+    puts sep
+    sleep 0.3 # Pauses in 0.3 seconds
+    puts
   end
 
   def read_instruction(instruction)
-    instruction.split("").each do |i|
+    instruction.each_char.with_index do |i, step_num|
       if i == 'M'
         move
       elsif i == "L" || i == "R"
@@ -15,8 +54,15 @@ class Rover
       else
         "That is not a valid input."
       end
+      print_plateau(step_num)
     end
-    "#{x} #{y} #{direction}"
+  end
+
+  def keep_on_plateau!
+    @x = 0        if @x < 0
+    @y = 0        if @y < 0
+    @x = @width   if @x > @width 
+    @y = @height  if @y > @height 
   end
 
   def move
@@ -30,6 +76,7 @@ class Rover
     when "W"
       then @x -= 1
     end
+    keep_on_plateau!
   end
 
   def turn(rotate)
@@ -49,16 +96,23 @@ class Rover
 end
 
 puts "Upper-right coordinates of the plateau:"
-plateau_size = gets.chomp
+width, height = gets.chomp.split
 
-puts "Please provide the initial start position:"
-x, y, dir = gets.chomp.split
+loop do
+  puts "Please provide the initial start position:"
+  line = gets
+  exit if line.nil? or line.chomp.empty?
 
-puts "Please provide navigation instructions:"
-navigation = gets.chomp
+  line.chomp!
+  
+  x, y, dir = line.split
 
-r1 = Rover.new(x.to_i, y.to_i, dir)
-puts r1.read_instruction(navigation)
+  puts "Please provide navigation instructions:"
+  navigation = gets.chomp
+
+  r1 = Rover.new(x, y, dir, width, height)
+  r1.read_instruction(navigation)
+end
 
 # r1 = Rover.new(1, 2, 'N')
 # r1.read_instruction("LMLMLMLMM")
