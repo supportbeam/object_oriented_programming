@@ -18,32 +18,32 @@ class Rover
   #   "E" => "→",
   #   "W" => "←",
   # }
-  ARROWS = {
-    "N" => "^",
-    "S" => "v",
-    "E" => ">",
-    "W" => "<",
-  }
+  # ARROWS = {
+  #   "N" => "^",
+  #   "S" => "v",
+  #   "E" => ">",
+  #   "W" => "<",
+  # }
 
-  def print_plateau(step_num)
-    puts "Step: #{step_num}"
-    sep = (["---"] * width) # Create separators as long as the width
-    sep = [""] + sep + [""]  # Extra empties for bars
-    sep = sep.join("+")     # Create corners
-    height.downto(0) do |row|     # Go down the height
-      puts sep
-      r = ["   "] * width # Create cells
-      if row == y # If the rover is on this row
-        r[x] = " #{ARROWS[direction]} " # Print the direction in the cell
-      end
-      r = [""] + r + [""] # Adding outer bars
+  # def print_plateau(step_num)
+  #   puts "Step: #{step_num}"
+  #   sep = (["---"] * width) # Create separators as long as the width
+  #   sep = [""] + sep + [""]  # Extra empties for bars
+  #   sep = sep.join("+")     # Create corners
+  #   height.downto(0) do |row|     # Go down the height
+  #     puts sep
+  #     r = ["   "] * width # Create cells
+  #     if row == y # If the rover is on this row
+  #       r[x] = " #{ARROWS[direction]} " # Print the direction in the cell
+  #     end
+  #     r = [""] + r + [""] # Adding outer bars
 
-      puts r.join("|") # Creating and printing columns
-    end
-    puts sep
-    sleep 0.3 # Pauses in 0.3 seconds
-    puts
-  end
+  #     puts r.join("|") # Creating and printing columns
+  #   end
+  #   puts sep
+  #   sleep 0.3 # Pauses in 0.3 seconds
+  #   puts
+  # end
 
   def read_instruction(instruction)
     instruction.each_char.with_index do |i, step_num|
@@ -54,8 +54,9 @@ class Rover
       else
         "That is not a valid input."
       end
-      print_plateau(step_num)
+      # print_plateau(step_num)
     end
+    puts self
   end
 
   def keep_on_plateau!
